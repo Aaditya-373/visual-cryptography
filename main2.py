@@ -193,7 +193,7 @@ reconstructed_image = superimpose_shares(share1, share2)
 reconstructed_image_noiseless = medianFiltering(np.array(reconstructed_image))
 
 # Show the noise-reduced reconstructed image
-reconstructed_image_noiseless.show()
+reconstructed_image.show()
 original_image.show()
 reconstructed_image_noiseless.show()
 

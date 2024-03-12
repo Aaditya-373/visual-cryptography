@@ -5,6 +5,8 @@ import random
 import string
 import jwt
 from datetime import datetime, timedelta
+from main import login
+
 
 app = Flask(__name__)
 CORS(app)  # Add this line to enable CORS for your Flask app
@@ -41,15 +43,18 @@ def sso():
     # Get user's directory
     user_directory = registered_users[userId]
     # Save the image to user's directory
-    image_file.save(os.path.join(user_directory, image_file.filename))
-
+    image_file.save(os.path.join(user_directory, "share1"))
+    if(login("./"+user_directory+"/share1") ):
+        return jsonify({'message': 'Successful Signin'}),200
+    else :
+        return jsonify({'message': 'Invalid Credentials'})
     # Generate JWT token with expiration time of 1 week
     # expiration_time = datetime.utcnow() + timedelta(days=7)
     # token_payload = {'userId': userId, 'exp': expiration_time}
     # jwt_token = jwt.encode(token_payload, SECRET_KEY, algorithm='HS256')
     # print(jwt_token)
     # return jsonify({'message': 'Image uploaded successfully', 'token': jwt_token.decode('utf-8')}), 200
-    return jsonify({'message': 'Image uploaded successfully'})
+    
 
 
 @app.route('/register', methods=['POST'])

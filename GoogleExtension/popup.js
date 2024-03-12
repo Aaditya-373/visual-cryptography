@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.json())
       .then(data => {
         alert(data.message)
-        // localStorage.setItem('jwtToken', data.token);
       })
       .catch(error => {
         console.error('Error:', error);

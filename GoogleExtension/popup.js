@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   var loginForm = document.getElementById('login-form');
   loginForm.innerHTML = `
     <div class="login-container">
@@ -10,25 +10,25 @@ document.addEventListener('DOMContentLoaded', function() {
       </form>
     </div>`;
 
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
+  document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault();
-    
+
     var formData = new FormData();
-    formData.append("userid", document.getElementById("userId").value);
+    formData.append("userId", document.getElementById("userId").value);
     formData.append("image", document.getElementById("image").files[0]);
 
     fetch("http://localhost:5000/sso", {
       method: "POST",
       body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-      alert(data.message)
-      // localStorage.setItem('jwtToken', data.token);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert("An error occurred. Please try again.");
-    });
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message)
+        // localStorage.setItem('jwtToken', data.token);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred. Please try again.");
+      });
   });
 });

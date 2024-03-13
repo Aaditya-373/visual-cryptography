@@ -197,13 +197,8 @@ def register(userId):
     original_image_path="./"+userId+"/original.png"
     original_image = convert_to_binary(Image.open(original_image_path))
     share1, share2 = generate_shares(original_image)
-    folder_name = "user1"
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
-    share1.save(os.path.join(folder_name, "share1.png"))
-    share2.save(os.path.join(folder_name, "share2.png"))
-    #SEND TO USER SHARE2 AND DELETE IT FROM SERVER
-    #os.remove(share2)
+    share1.save(os.path.join(userId, "share1.png"))
+    share2.save(os.path.join(userId, "share2.png"))
 
 def login(userId):
     original_image_path="./"+userId+"/original.png"

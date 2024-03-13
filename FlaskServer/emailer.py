@@ -2,8 +2,8 @@
 import os
 import smtplib
 from email.message import EmailMessage
-EMAIL_ADDRESS = "varunfordev@outlook.com" or os.environ.get('EMAIL_ADDRESS') #cant use gmail for sending addresses
-EMAIL_PASSWORD = "devforvarun#2003" or os.environ.get('EMAIL_PASSWORD')
+EMAIL_ADDRESS = os.environ.get('EMAIL_ADDRESS') #cant use gmail for sending addresses
+EMAIL_PASSWORD =  os.environ.get('EMAIL_PASSWORD')
 
 
 def sendEmail(imgpath,receiverEmail,userid):

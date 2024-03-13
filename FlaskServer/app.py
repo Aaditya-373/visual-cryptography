@@ -45,7 +45,7 @@ def sso():
     if(login(userId)):
         return jsonify({'message': 'Successful Signin'}),200
     else :
-        return jsonify({'message': 'Invalid Credentials'})
+        return jsonify({'message': 'Invalid Credentials'}) , 400
     
 import base64
 @app.route('/ssor', methods=['POST'])

@@ -148,6 +148,7 @@ def convert_to_binary(image, threshold=128):
     if image.mode != 'L':
         image = image.convert('L')
     binary_image = ImageOps.posterize(image, 1)
+    binary_image.show()
     return binary_image
 
 def superimpose_shares(share1, share2):
@@ -160,12 +161,9 @@ def superimpose_shares(share1, share2):
             # Get pixel values from both shares
             pixel_share1 = share1.getpixel((i, j))
             pixel_share2 = share2.getpixel((i, j))
-
-            # Combine them to reconstruct the original pixel value
-            # reconstructed_pixel =min( pixel_share1,pixel_share2)
             reconstructed_pixel = min(pixel_share1,pixel_share2)
             reconstructed_image.putpixel((i, j),reconstructed_pixel)
-
+    reconstructed_image.show()
     return reconstructed_image
 
 
@@ -198,28 +196,27 @@ def assess_validity(reconstructed_image, original_image, threshold):
 
 
 def register(userId):
-    original_image_path="./"+userId+"/original.jpeg"
+    original_image_path="./"+userId+"/original.png"
     original_image = convert_to_binary(Image.open(original_image_path))
     share1, share2 = generate_shares(original_image)
     folder_name = "user1"
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
-    share1.save(os.path.join(folder_name, "share1.jpeg"))
-    share2.save(os.path.join(folder_name, "share2.jpeg"))
+    share1.save(os.path.join(folder_name, "share1.png"))
+    share2.save(os.path.join(folder_name, "share2.png"))
     #SEND TO USER SHARE2 AND DELETE IT FROM SERVER
     #os.remove(share2)
 
 def login(userId):
-    original_image_path="./"+userId+"/original.jpeg"
-    share1_path="./"+userId+"/share1.jpeg"
-    share2_path="./"+userId+"/share2.jpeg"
+    original_image_path="./"+userId+"/original.png"
+    share1_path="./"+userId+"/share1.png"
+    share2_path="./"+userId+"/share2.png"
     # Load images and explicitly convert them to PIL.Image.Image
     share1 = Image.open(share1_path).convert('L')
     share2 = Image.open(share2_path).convert('L')
     original_image = convert_to_binary(Image.open(original_image_path))
-    print(type(share1))
     reconstructed_image = superimpose_shares(share1, share2)
-    if assess_validity(reconstructed_image, original_image, threshold=0.00001):
+    if assess_validity(reconstructed_image, original_image, threshold=0.001):
         return True
     else:
         return False

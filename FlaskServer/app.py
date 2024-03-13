@@ -40,7 +40,7 @@ def sso():
     image_file = request.files['image']
     if image_file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-    image_path = os.path.join(os.getcwd(),userId, "share2.jpeg")
+    image_path = os.path.join(os.getcwd(),userId, "share2.png")
     image_file.save(image_path)
     if(login(userId)):
         return jsonify({'message': 'Successful Signin'}),200
@@ -67,7 +67,7 @@ def ssor():
     userId = generate_user_id()
     user_directory = os.path.join(os.getcwd(), 'users', userId)
     os.makedirs(user_directory, exist_ok=True)
-    image_path = os.path.join(user_directory, "original.jpeg")
+    image_path = os.path.join(user_directory, "original.png")
     image_file.save(image_path)
     registered_users[userId] = {'userId': userId}
 

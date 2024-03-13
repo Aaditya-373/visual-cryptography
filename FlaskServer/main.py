@@ -148,7 +148,6 @@ def convert_to_binary(image, threshold=128):
     if image.mode != 'L':
         image = image.convert('L')
     binary_image = ImageOps.posterize(image, 1)
-    binary_image.show()
     return binary_image
 
 def superimpose_shares(share1, share2):
@@ -163,7 +162,6 @@ def superimpose_shares(share1, share2):
             pixel_share2 = share2.getpixel((i, j))
             reconstructed_pixel = min(pixel_share1,pixel_share2)
             reconstructed_image.putpixel((i, j),reconstructed_pixel)
-    reconstructed_image.show()
     return reconstructed_image
 
 
@@ -186,7 +184,7 @@ def assess_validity(reconstructed_image, original_image, threshold):
 
     # Compare combined image with a template/reference image
     similarity_score = ssim(reconstructed_array, original_array)
-    
+    print(similarity_score)
     if similarity_score > threshold:
         return True
     else:
@@ -216,7 +214,7 @@ def login(userId):
     share2 = Image.open(share2_path).convert('L')
     original_image = convert_to_binary(Image.open(original_image_path))
     reconstructed_image = superimpose_shares(share1, share2)
-    if assess_validity(reconstructed_image, original_image, threshold=0.001):
+    if assess_validity(reconstructed_image, original_image, threshold=0.1):
         return True
     else:
         return False

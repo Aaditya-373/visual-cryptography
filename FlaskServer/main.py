@@ -166,15 +166,9 @@ def superimpose_shares(share1, share2):
 
 
 def medianFiltering(img):
-    # Convert the image to RGB format (if it's not already)
     imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-    
-    # Apply median filtering with a kernel size of 5x5
     imgFilter = cv.medianBlur(imgRGB, 5)
-    
-    # Convert the filtered image back to PIL format
     filtered_image = Image.fromarray(cv.cvtColor(imgFilter, cv.COLOR_RGB2BGR))
-    
     return filtered_image
 
 

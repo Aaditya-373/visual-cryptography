@@ -33,6 +33,8 @@ def sendEmail(imgpath,receiverEmail,userid):
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
 
+    os.remove("./"+userid+"/share2.png")
+            
 
 def sendEmailContent(textpath, receiverEmail):
     if EMAIL_ADDRESS is None or EMAIL_PASSWORD is None:
@@ -55,3 +57,4 @@ def sendEmailContent(textpath, receiverEmail):
             smtp.ehlo()
             smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
             smtp.send_message(msg)
+        

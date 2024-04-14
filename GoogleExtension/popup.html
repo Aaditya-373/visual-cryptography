@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-  <link rel="stylesheet" href="./styles.css">
+  <script src="popup.js"></script>
 </head>
 <body>
-  <div id="login-form"></div>
-  <script src="popup.js"></script>
+  <h2>Login</h2>
+  <form id="login-form" enctype="multipart/form-data">
+    <input type="text" name="userId" id="userId" placeholder="UserID" required>
+    <input type="file" name="image" id="image" accept="image/*" required>
+    <input type="submit" value="Login" id="submitButton">
+  </form>
 </body>
 </html>

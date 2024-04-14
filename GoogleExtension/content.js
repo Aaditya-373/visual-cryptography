@@ -1,7 +1,6 @@
 // Function to set styles to make the page 25% visible, blurred, and not clickable
 function setLoginPageStyles() {
-  // document.body.style.opacity = '0.25';
-  // document.body.style.filter = 'blur(5px)';
+  document.body.style.opacity = '0';
   document.body.style.pointerEvents = 'none';
 
   // Save original page content and styles to Chrome storage
@@ -17,8 +16,7 @@ function setLoginPageStyles() {
 function revertPageStyles() {
   chrome.storage.local.get(["originalPageContent", "originalOpacity", "originalFilter", "originalPointerEvents"], function(result) {
     // document.body.innerHTML = result.originalPageContent;
-    // document.body.style.opacity = result.originalOpacity;
-    // document.body.style.filter = result.originalFilter;
+    document.body.style.opacity = result.originalOpacity;
     document.body.style.pointerEvents = result.originalPointerEvents;
   });
 }

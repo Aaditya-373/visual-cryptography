@@ -14,6 +14,7 @@ CORS(app)  # Add this line to enable CORS for your Flask app
 registered_users = {
     "user1": "user1",
 }
+
 SECRET_KEY = 'your_secret_key_here'
 
 @app.route('/sso', methods=['POST'])
@@ -29,11 +30,14 @@ def sso():
     image_file = request.files['image']
     if image_file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
+    
     image_path = os.path.join(os.getcwd(),userId, "share2.png")
     image_file.save(image_path)
     if(login(userId)):
+        os.remove(image_path)
         return jsonify({'message': 'Successful Signin'}),200
     else :
+        os.remove(image_path)
         return jsonify({'message': 'Invalid Credentials'}) , 400
     
 

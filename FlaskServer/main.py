@@ -175,8 +175,6 @@ def medianFiltering(img):
 def assess_validity(reconstructed_image, original_image, threshold):
     reconstructed_array = np.array(reconstructed_image)
     original_array = np.array(original_image)
-
-    # Compare combined image with a template/reference image
     similarity_score = ssim(reconstructed_array, original_array)
     print(similarity_score)
     if similarity_score > threshold:
@@ -203,7 +201,7 @@ def login(userId):
     share2 = Image.open(share2_path).convert('L')
     original_image = convert_to_binary(Image.open(original_image_path))
     reconstructed_image = superimpose_shares(share1, share2)
-    if assess_validity(reconstructed_image, original_image, threshold=0.1):
+    if assess_validity(reconstructed_image, original_image, threshold=0.01):
         return True
     else:
         return False

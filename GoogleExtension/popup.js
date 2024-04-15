@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.append("userId", document.getElementById("userId").value);
     formData.append("image", document.getElementById("image").files[0]);
 
-    fetch("http://localhost:5000/sso", {
+    fetch("http://localhost:4000/sso", {
       method: "POST",
       body: formData
     })

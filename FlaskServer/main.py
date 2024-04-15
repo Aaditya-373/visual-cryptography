@@ -171,6 +171,11 @@ def medianFiltering(img):
     filtered_image = Image.fromarray(cv.cvtColor(imgFilter, cv.COLOR_RGB2BGR))
     return filtered_image
 
+def restoreImage(filtered_image):
+    # Apply median filter again to reverse the effect
+    restored_image = cv.medianBlur(filtered_image, 5)
+    restored_image = cv.cvtColor(restored_image, cv.COLOR_RGB2BGR)
+    return restored_image
 
 def assess_validity(reconstructed_image, original_image, threshold):
     reconstructed_array = np.array(reconstructed_image)
@@ -193,17 +198,19 @@ def register(userId):
     share2.save(os.path.join(userId, "share2.png"))
 
 def login(userId):
-    original_image_path="./"+userId+"/original.png"
-    share1_path="./"+userId+"/share1.png"
-    share2_path="./"+userId+"/share2.png"
-    # Load images and explicitly convert them to PIL.Image.Image
-    share1 = Image.open(share1_path).convert('L')
-    share2 = Image.open(share2_path).convert('L')
-    original_image = convert_to_binary(Image.open(original_image_path))
-    reconstructed_image = superimpose_shares(share1, share2)
-    if assess_validity(reconstructed_image, original_image, threshold=0.01):
-        return True
-    else:
+    try:
+        original_image_path="./"+userId+"/original.png"
+        share1_path="./"+userId+"/share1.png"
+        share2_path="./"+userId+"/share2.png"
+        # Load images and explicitly convert them to PIL.Image.Image
+        share1 = Image.open(share1_path).convert('L')
+        share2 = Image.open(share2_path).convert('L')
+        original_image = convert_to_binary(Image.open(original_image_path))
+        reconstructed_image = superimpose_shares(share1, share2)
+        if assess_validity(reconstructed_image, original_image, threshold=0.01):
+            return True
+        else:
+            return False
+    except Exception as e :
         return False
-
 

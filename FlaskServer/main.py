@@ -5,6 +5,9 @@ from skimage.metrics import structural_similarity as ssim
 import numpy as np
 import cv2 as cv
 import os
+from PIL import Image, ImageFilter
+
+
 def generate_shares(original_image):
     share1 = original_image.copy()
     share2 = original_image.copy()
@@ -165,17 +168,18 @@ def superimpose_shares(share1, share2):
     return reconstructed_image
 
 
-def medianFiltering(img):
-    imgRGB = cv.cvtColor(img, cv.COLOR_BGR2RGB)
-    imgFilter = cv.medianBlur(imgRGB, 5)
-    filtered_image = Image.fromarray(cv.cvtColor(imgFilter, cv.COLOR_RGB2BGR))
-    return filtered_image
+def invert_image(image):
+    # Convert the image to a NumPy array
+    image_array = np.array(image)
 
-def restoreImage(filtered_image):
-    # Apply median filter again to reverse the effect
-    restored_image = cv.medianBlur(filtered_image, 5)
-    restored_image = cv.cvtColor(restored_image, cv.COLOR_RGB2BGR)
-    return restored_image
+    # Invert the colors by subtracting each pixel value from 255
+    inverted_array = 255 - image_array
+
+    # Convert the inverted array back to an image
+    inverted_image = Image.fromarray(inverted_array)
+
+    return inverted_image
+
 
 def assess_validity(reconstructed_image, original_image, threshold):
     reconstructed_array = np.array(reconstructed_image)
@@ -194,6 +198,10 @@ def register(userId):
     original_image_path="./"+userId+"/original.png"
     original_image = convert_to_binary(Image.open(original_image_path))
     share1, share2 = generate_shares(original_image)
+    
+    original_image = Image.open(original_image_path)
+    original_image = invert_image(original_image)
+    original_image.save(original_image_path)
     share1.save(os.path.join(userId, "share1.png"))
     share2.save(os.path.join(userId, "share2.png"))
 
@@ -202,10 +210,12 @@ def login(userId):
         original_image_path="./"+userId+"/original.png"
         share1_path="./"+userId+"/share1.png"
         share2_path="./"+userId+"/share2.png"
-        # Load images and explicitly convert them to PIL.Image.Image
         share1 = Image.open(share1_path).convert('L')
         share2 = Image.open(share2_path).convert('L')
-        original_image = convert_to_binary(Image.open(original_image_path))
+        
+        original_image=Image.open(original_image_path)
+        original_image=invert_image(original_image)
+        original_image = convert_to_binary(original_image)
         reconstructed_image = superimpose_shares(share1, share2)
         if assess_validity(reconstructed_image, original_image, threshold=0.01):
             return True

@@ -5,7 +5,7 @@ import random
 import string
 import jwt
 from datetime import datetime, timedelta
-from main import login,register,restoreImage,medianFiltering
+from main import login,register
 from emailer import sendEmail
 import bcrypt
 import pymysql

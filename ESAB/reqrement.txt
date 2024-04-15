@@ -1,0 +1,51 @@
+
+Tables:
+User
+Admin
+Trsaction
+Books
+
+Features:
+User:
+issue a book:
+	User qrscanning
+	Book qrscanning
+Return a boook:
+	User qrscanning
+	Book qrscanning
+User Information:
+	User qrscanning
+
+
+Admin
+	Login(Only he can login)
+	register new user
+	updating user
+	view user
+	seaching User by name
+	reg books
+	view books
+	updating books
+	searching Book by names
+	searching transaction by transaction id
+	view Transaction id
+	update return date
+
+
+CREATE TABLE Notification (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    book_id INT,
+    return_date DATE,
+    phone_number VARCHAR(20),
+    FOREIGN KEY (user_id) REFERENCES USER(user_id),
+    FOREIGN KEY (book_id) REFERENCES BOOKS(book_id)
+);
+
+-- Insert data into the Notification table for records where Return Date > Current Date
+INSERT INTO Notification (user_id, book_id, return_date, phone_number)
+SELECT T.user_id, T.book_id, T.return_date, U.phone_number
+FROM TRANSACTION AS T
+JOIN USER AS U ON T.user_id = U.user_id
+JOIN BOOKS AS B ON T.book_id = B.book_id
+WHERE T.return_date > CURDATE();

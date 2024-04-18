@@ -1,66 +1,79 @@
-/* Styles.css */
-
-/* Apply styles to body */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #1e2a4a; /* Dark Blue */
-  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  color: #333;
 }
 
-/* Apply styles to login container */
 .login-container {
-  max-width: 400px;
-  padding: 20px;
-  background-color: #ff6347; /* Dark Orange */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  min-width: 250px;
+  padding: 40px;
   text-align: center;
+  background-color: orangered;
 }
 
-/* Apply styles to login container heading */
-.login-container h2 {
+.logo-container {
   margin-bottom: 20px;
 }
 
-/* Apply styles to input fields */
-.login-form input[type="text"],
-.login-form input[type="password"],
-.login-form input[type="file"] {
-  width: 200px;
+.login-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color:white;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+#userId,
+#password,
+#image {
+  width: calc(100% - 22px);
   padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #fff;
-  border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   box-sizing: border-box;
-  background-color: transparent;
-  color: #fff;
+  background-color: #f9f9f9;
+  color: #333;
+  outline: none;
 }
 
-/* Apply styles to submit button */
-.login-form input[type="submit"] {
-  width: 200px;
-  padding: 10px;
-  background-color: #ff4500; /* Darker Orange */
-  color: #fff;
+.file-label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left;
+  font-size: 14px;
+  color: #555;
+}
+
+#submitButton,
+#resetButton {
+  width: 45%;
+  background-color: #090030; 
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  padding: 12px;
   cursor: pointer;
+  color: #fff; /* White */
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-/* Apply hover styles to submit button */
-.login-form input[type="submit"]:hover {
-  background-color: #cc3700; /* Darker Orange on hover */
+#submitButton:hover,
+#resetButton:hover {
+  background-color: #090030; 
 }
 
-/* Apply styles to logo */
 .logo {
   width: 100px;
   height: 100px;
-  margin-bottom: 20px;
+  border-radius: 50%;
+  border: 5px solid #090030;
+  background-color: #fff; /* White */
 }

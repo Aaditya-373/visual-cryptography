@@ -16,7 +16,7 @@ CORS(app)  # Add this line to enable CORS for your Flask app
 HOST = 'localhost'
 USER = 'root'
 PASSWORD = 'Mysqlvarun#2004'
-DATABASE = 'RAMCO_TESTDB'
+DATABASE = 'VisualCryptoGraphy'
 
 conn = pymysql.connect(host=HOST, user=USER, password=PASSWORD, database=DATABASE)
 conn.commit()

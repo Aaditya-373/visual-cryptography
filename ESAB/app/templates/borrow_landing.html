@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/landing.css">
+    <title>Message</title>
+</head>
+
+<body>
+    <div class="text_only">
+        <h1>Status</h1>
+        <p> {{ message }}</p>
+        {% if transaction_id is number %}
+            <p>Transaction_id: {{ transaction_id }}</p>
+            <p>Please Remember your Transaction Id</p>
+        {% endif %}
+
+    </div>
+</body>

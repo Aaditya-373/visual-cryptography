@@ -214,4 +214,3 @@ if assess_validity(reconstructed_image, original_image, threshold):
     print("Valid image.")
 else:
     print("Invalid image.")
-    

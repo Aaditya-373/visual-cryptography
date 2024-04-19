@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Login Extension",
+  "version": "1.0",
+  "description": "Display a login form",
+  "action": {
+      "default_popup": "popup.html"
+  },
+  "permissions": [
+      "activeTab",
+      "storage",
+      "scripting"
+  ],
+  "background": {
+      "service_worker": "background.js"
+  },
+  "content_scripts": [
+      {
+         "matches":["<all_urls>"],
+         "include_globs": ["http://*:5000/*"],
+          "js": ["content.js"],
+          "css": ["styles.css"]
+      }
+  ],
+  "icons": {
+    "128": "Vclogo.png"
+}
+}

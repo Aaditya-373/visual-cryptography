@@ -1,0 +1,30 @@
+function registerUser(username, password, imageFile) {
+    // Create form data
+    var formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('image', imageFile);
+
+    // Make POST request to the /register endpoint
+    fetch('/register', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        // Check if response is successful
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Registration failed');
+        }
+    })
+    .then(data => {
+        // Handle successful registration
+        console.log('Registration successful:', data);
+        // You can perform additional actions here if needed
+    })
+    .catch(error => {
+        // Handle errors
+        console.error('Error:', error);
+    });
+}

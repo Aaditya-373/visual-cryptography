@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../static/user_table_view_info.css">
+    <title>User Transactions</title>
+</head>
+<body>
+    <div>
+        <h1>User Transactions</h1>
+        <p>First Name: {{ user.first_name }}</p>
+        <p>Last Name: {{ user.last_name }}</p>
+    </div>
+    <div class="whole_table">
+        <div class="table_heading"><h2>Transaction Table:</h2></div>
+        <div>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Return Date</th>
+                    <th>Returned</th>
+                </tr>
+    
+                {% for transaction in transactions %}
+                <tr>
+                    <td>{{ book_id_to_title[transaction.book_id] }}</td>
+                    <td>{{ transaction.issue_date.strftime("%m/%d/%Y") }}</td>
+                    <td>{{ transaction.due_date.strftime("%m/%d/%Y") }}</td>
+                    <td>{% if transaction.return_date %}
+                    {{ transaction.return_date.strftime("%m/%d/%Y") }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                    </td>
+                    <td>{{ "Yes" if transaction.returned else "No" }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h2>Number of Books Returned: {{ books_returned }}</h2>
+            <h2>Number of Books Not Returned: {{ books_not_returned }}</h2>
+        </div>
+    </div>
+</body>
+</html>

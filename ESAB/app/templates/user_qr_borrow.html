@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='qrScript.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='qr_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<h2>user_qr_scan</h2>
+<div id="reader"></div>
+<form name="qrform" method="POST" action="{{ url_for('user_qrscan_borrow') }}">
+    {{ form.hidden_tag() }}
+</form>
+
+<script src="{{ url_for('static', filename='scanning_qr.js') }}"></script>
+
+{% endblock %}

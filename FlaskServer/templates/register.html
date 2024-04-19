@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #registrationForm {
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #ffa500;
+            text-align: center;
+        }
+
+        input[type="email"], input[type="file"], input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            background-color: #ffa500;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff7e00;
+        }
+    </style>
+</head>
+<body>
+    <div id="registrationForm">
+        <h1>User Registration</h1>
+        <form id="registrationForm" action="/ssor" method="POST" enctype="multipart/form-data">
+            <input type="file" id="imageInput" accept="image/*" required>
+            <input type="email" id="emailid" name="emailid" placeholder="emailid"> 
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput.files.length === 0) {
+                alert('Please select an image file.');
+                return;
+            }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    const dataUrl = canvas.toDataURL('image/png');
+                    const blobBin = atob(dataUrl.split(',')[1]);
+                    const array = [];
+                    for (let i = 0; i < blobBin.length; i++) {
+                        array.push(blobBin.charCodeAt(i));
+                    }
+                    const fileBlob = new Blob([new Uint8Array(array)], {type: 'image/png'});
+                    const newFile = new File([fileBlob], 'original.png', {type: 'image/png'});
+                    const formData = new FormData();
+                    formData.append('image', newFile);
+                    // Append email to the form data
+                    formData.append('emailid', document.getElementById('emailid').value);
+                    fetch('/ssor', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        // You can redirect or perform other actions as needed upon successful registration
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred during registration.');
+                    });
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
